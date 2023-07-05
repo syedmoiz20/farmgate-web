@@ -1,0 +1,9 @@
+.listing {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.listing h2 {
+  margin-top: 0;
+}

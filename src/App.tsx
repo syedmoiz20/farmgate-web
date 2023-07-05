@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import LandingPage from './components/LandingPage';
+import Header from './components/Header';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
 
 function App() {
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Header/>
+                <LandingPage/>
+              </>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }

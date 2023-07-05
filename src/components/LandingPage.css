@@ -1,0 +1,26 @@
+.landing_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.landing_text1 {
+  display: block;
+  color: #000;
+  font-size: 60px;
+  font-family: Crimson Pro;
+  font-weight: 600;
+  text-align: center;
+}
+
+.landing_text2 {
+  display: block;
+  color: #000;
+  font-size: 50px;
+  font-family: Crimson Pro;
+  font-weight: 300;
+  text-align: center;
+}
