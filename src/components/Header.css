@@ -17,18 +17,29 @@ header h1 {
   font-family: Crimson Pro;
 }
 
-.header-buttons {
-  position: absolute;
-  left: 20px;
+h1 a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.header-buttons button {
-  margin-right: 10px;
+.header-pages {
+  position: absolute;
+  left: 20px;
+  display: flex;
+}
+
+.header-pages h2 {
+  margin-right: 30px;
   font-family: Crimson pro;
   background-color: #50a050;
   color: white;
   font-size: 30px;
   outline: none;
+}
+
+h2 a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .header-account {
