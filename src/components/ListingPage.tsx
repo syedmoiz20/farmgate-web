@@ -1,69 +1,137 @@
 import { FieldErrors, useForm } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import "./ListingPage.css";
 
-type Inputs = {
-  title: string;
-  user: string;
-  location: string;
-  type: string;
-  quantity: number;
-  unit: string;
-};
+function fileToBuffer(file: File): Promise<Uint8Array> {
+  console.log(file.size);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(new Uint8Array(reader.result as ArrayBuffer));
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
 
-const list = (data: Inputs) => {
+
+const list = async (data: any): Promise<Boolean> => {
+  //const imageBuffer = await fileToBuffer(data.image.item(0));
   const listData = {
     ...data,
-    image: "mock image data",
+    // image: imageBuffer,
     date: Date.now(),
   };
   console.log(`sending this data for listing: ${JSON.stringify(listData)}`);
-
-  fetch("http://localhost:7000/listings", {
+  let listSuccess: boolean = false;
+  await fetch("http://localhost:7000/listings", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(listData),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        // Display success message
+        console.log(`success path`);
+        listSuccess = true;
+      } else {
+        // Handle unsuccessful submission
+        console.log(`unsuccess path`);
+        listSuccess = false;
+      }
+      // return response.json();
+    })
     .then((data) => {
       console.log(data);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+  return listSuccess;
 };
 
 export default function ListingPage() {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (data: Inputs) => {
+  const onSubmit = async (data: any) => {
     console.log(`data received: ${JSON.stringify(data)}`);
-    list(data);
+    const listSuccess: Boolean = await list(data);
+    console.log(`listing result: ${listSuccess}`)
+    if (listSuccess) {
+      toast.success('Listing was submitted successfully!');
+    }
+    else {
+      toast.error('The listing could not be submitted');
+    }
+    reset();
   };
 
   const onErrors = (errors: FieldErrors) => {
     console.error(`erorr: ${errors}`);
   };
+
   return (
     <div className="page-content">
+
       <form onSubmit={handleSubmit(onSubmit, onErrors)}>
         <input {...register("title")} placeholder="Title" />
         <input {...register("user")} placeholder="User" />
         <input {...register("location")} placeholder="Location" />
         <input {...register("type")} placeholder="Type" />
-        <input {...register("quantity")} placeholder="Quantity" />
+        <input type="number" {...register("quantity")} placeholder="Quantity" />
         <input {...register("unit")} placeholder="Unit" />
-
-        {/* {errors.title && <span>This field is required</span>}
-        {errors.user && <span>This field is required</span>}
-        {errors.location && <span>This field is required</span>}
-        {errors.type && <span>This field is required</span>}
-        {errors.quantity && <span>This field is required</span>}
-        {errors.unit && <span>This field is required</span>} */}
-
+        {/* Add an image field */}
+        <input type="file" {...register('image')} />
         <input type="submit" className="submit-button" />
       </form>
+      <ToastContainer />
     </div>
   );
 }
+
+// // import { readFileSync } from 'fs';
+// import { useForm } from 'react-hook-form';
+
+// // function fileToBuffer(file: any): Promise<Buffer> {
+// //   return new Promise((resolve, reject) => {
+// //     const reader = new FileReader();
+// //     reader.onload = () => {
+// //       const arrayBuffer = reader.result as ArrayBuffer;
+// //       resolve(Buffer.from(arrayBuffer));
+// //     };
+// //     reader.onerror = reject;
+// //     reader.readAsArrayBuffer(file);
+// //   });
+// // }
+
+// export default function MyForm() {
+//   const { register, handleSubmit } = useForm();
+
+//   const onSubmit = (data: any) => {
+//     // Access the FileList object
+//     const fileList = data.image;
+//     // readFileSync(data.image)
+//     // Access the selected File objects
+//     for (let i = 0; i < fileList.length; i++) {
+//       const file = fileList.item(i);
+//       console.log(file);
+//     }
+//   };
+
+//   return (
+//     <div className="page-content">
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         {/* Register the file input element with React Hook Form */}
+//         <input {...register("title")} placeholder="Title" />
+//         <input type="number" {...register("quantity")} placeholder="Quantity" />
+//         <input {...register("location")} placeholder="Location" />
+//         <input type="file" {...register('image')} />
+
+//         <input type="submit" />
+//       </form>
+//     </div>
+//   );
+// }
