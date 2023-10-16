@@ -17,10 +17,10 @@ function fileToBuffer(file: File): Promise<Uint8Array> {
 
 
 const list = async (data: any): Promise<Boolean> => {
-  //const imageBuffer = await fileToBuffer(data.image.item(0));
+  const imageBuffer = await fileToBuffer(data.image.item(0));
   const listData = {
     ...data,
-    // image: imageBuffer,
+    image: imageBuffer,
     date: Date.now(),
   };
   console.log(`sending this data for listing: ${JSON.stringify(listData)}`);
@@ -35,11 +35,11 @@ const list = async (data: any): Promise<Boolean> => {
     .then((response) => {
       if (response.ok) {
         // Display success message
-        console.log(`success path`);
+        console.debug(`success path`);
         listSuccess = true;
       } else {
         // Handle unsuccessful submission
-        console.log(`unsuccess path`);
+        console.debug(`unsuccess path`);
         listSuccess = false;
       }
       // return response.json();
