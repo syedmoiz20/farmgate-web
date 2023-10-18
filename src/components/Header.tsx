@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import "./Header.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Header: FC = () => {
-  const navigate = useNavigate();
-  const linkToBrowse = () => {
-    navigate("/browse");
-  };
+  // const navigate = useNavigate();
+  // const linkToBrowse = () => {
+  //   navigate("/browse");
+  // };
   return (
     <header>
       <div className="header-pages">

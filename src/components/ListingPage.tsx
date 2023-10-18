@@ -1,26 +1,13 @@
 import { FieldErrors, useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
+
 import "react-toastify/dist/ReactToastify.css";
 import "./ListingPage.css";
 
-function fileToBuffer(file: File): Promise<Uint8Array> {
-  console.log(file.size);
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      resolve(new Uint8Array(reader.result as ArrayBuffer));
-    };
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-}
-
 
 const list = async (data: any): Promise<Boolean> => {
-  const imageBuffer = await fileToBuffer(data.image.item(0));
   const listData = {
     ...data,
-    image: imageBuffer,
     date: Date.now(),
   };
   console.log(`sending this data for listing: ${JSON.stringify(listData)}`);
@@ -83,7 +70,6 @@ export default function ListingPage() {
         <input {...register("type")} placeholder="Type" />
         <input type="number" {...register("quantity")} placeholder="Quantity" />
         <input {...register("unit")} placeholder="Unit" />
-        {/* Add an image field */}
         <input type="file" {...register('image')} />
         <input type="submit" className="submit-button" />
       </form>
