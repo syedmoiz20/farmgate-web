@@ -47,9 +47,9 @@ h2 a {
   right: 20px;
 }
 
-.header-account div {
+.header-account h2 {
   color: white;
-  font-size: 20px;
+  font-size: 23px;
   font-family: Content;
   font-weight: 700;
   text-align: right;

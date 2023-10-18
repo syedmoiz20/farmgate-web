@@ -5,9 +5,10 @@ import Browse from "./components/Browse";
 import ListingPage from "./components/ListingPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/Signup";
 
 function App() {
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   return (
     <div className="app">
       <Router>
@@ -36,6 +37,24 @@ function App() {
               <>
                 <Header />
                 <ListingPage />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <Header />
+                <LoginPage />
+              </>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <>
+                <Header />
+                <SignupPage />
               </>
             }
           />
